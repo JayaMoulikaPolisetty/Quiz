@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {background-color:lightgrey}
+
+button {
+    background-color: #4CAF50; /* green */
+    border-radius: 4px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+</style> 
+<meta charset="UTF-8">
+<script>
+var pos = 0, test, status, question, choice, choices, chA, chB, chC,chD, correct = 0;
+var ques = [
+    [ "Which of the following is correct about features of JavaScript?", "JavaScript is a lightweight, interpreted programming language.", "JavaScript is designed for creating network-centric applications.", "JavaScript is complementary to and integrated with Java.", "All of the above.", "D","All of the above options are correct." ],
+	[ "Which of the following type of variable is visible everywhere in your JavaScript code?", "Global variable", "local variable", "Both", "None", "A","Global Variables: A global variable has global scope which means it is visible everywhere in your JavaScript code." ],
+	[ "Which built-in method calls a function for each element in the array?", "while()", "loop()", "foreach()", "None of the above", "C" ,"foreach() calls a function for each element in the array" ],
+	[ " Which of the following code creates an object?", "var book = Object();", "var book = new Object();", "var book = new OBJECT();", "var book = new Book();", "B","var book = new Object(); creates an object." ],
+	[" Which of the following function of String object combines the text of two strings and returns a new string?", "add()", "merge()", "concat()", "append()", "C","concat() − Combines the text of two strings and returns a new string."],
+	["Which of the following function of String object returns a number indicating whether a reference string comes before or after or is the same as the given string in sort order?", "localeCompare()", "search()", "substr()", "concat()", "A"],
+	[ "Which of the following function of String object creates a string to be displayed as bold as if it were in a &lt;b&gt; tag?", "anchor()", "big()", "blink()", "bold()", "D","bold() creates a string to be displayed as bold"],
+	["Which of the following function of String object causes a string to be displayed as a superscript, as if it were in a &lt;sup&gt; tag?", "sup()", "small()", "strike()", "sub()", "A","sup() displays string as superscript"],
+	["Which of the following function of Array object returns the first (least) index of an element within the array equal to the specified value, or -1 if none is found?", "indexOf()", "join()", "lastIndexOf()", "map()", "A","indexOf() − Returns the first (least) index of an element within the array equal to the specified value, or -1 if none is found."],
+	["Which of the following function of Array object removes the first element from an array and returns that element?", "reverse()", "shift()", "slice()", "some()", "B","shift() method removes the first element from an array and returns that element."],
+	["Which of the following is a disadvantage of using JavaScript?", "Client-side JavaScript does not allow the reading or writing of files.", "JavaScript can not be used for Networking applications because there is no such support available.", "JavaScript doesn't have any multithreading or multiprocess capabilities", "All of the above", "D","All of the above options are correct."],
+	["How can you get the type of arguments passed to a function?", "using typeof operator", "using getType function", "Both of the above", "None of the above", "A"],
+	["Which built-in method adds one or more elements to the end of an array and returns the new length of an array?", "last()", "put()", "push()", "None of the above", "C","push() adds elements to the end of an array"],
+	["Which built-in method sorts the elements of an array?", "changeOrder(order)", "order()", "sort()", "None of the above", "C","sort() − Sorts the elements of an array."],
+	["Which of the following function of boolean object returns a string containing the source of the boolean object?", "toSource()", "valueOf()", "toString()", "None of the above", "A","toSource() returns a string containing the source of the boolean object"],
+	["Which of the following function of String object returns the characters in a string beginning at the specified location through the specified number of characters?", "slice()", "split()", "substr()", "search()", "C"],
+	["Which of the following funcion of String object creates a string to blink as if it were in a &lt;blink&gt; tag?", "anchor()", "big()", "blink()", "italics()", "C","blink() − Creates a string to blink as if it were in a <blink> tag."],
+	["Which of the following function of Array object returns a new array comprised of this array joined with other array(s) and/or value(s)?", "concat()", "pop()", "push()", "some()", "A","concat() returns a new array comprised of this array joined with other array(s) and/or value(s)"],
+	["Which of the following function of Array object creates a new array with all of the elements of this array for which the provided filtering function returns true?", "concat()", "every()", "filter()", "some()", "C","filter() − Creates a new array with all of the elements of this array for which the provided filtering function returns true."],
+	["Which of the following function of Array object sorts the elements of an array?", "toSource()", "sort()", "toString()", "unshift()", "B","sort() is used to sort the elements of an array"]
+];
+function _(x){
+	return document.getElementById(x);
+}
+function Question(){
+	test = _("test");
+	if(pos >= ques.length){
+		test.innerHTML = "<h2>You got "+correct+" of "+ques.length+" questions correct</h2>";
+		_("status").innerHTML = "Test Completed";
+		pos=0;
+		correct=0;
+		test.innerHTML +="<button onclick='solution()'>solutions</button>";
+		return false;
+	}
+	_("status").innerHTML = "There are " +ques.length+" Questions";
+	question = ques[pos][0];
+	chA = ques[pos][1];
+	chB = ques[pos][2];
+	chC = ques[pos][3];
+	chD = ques[pos][4];
+	test.innerHTML = "<h3>"+(pos+1)+"."+question+"</h3>";
+	test.innerHTML += "<input type='radio' name='choices' value='A'> "+chA+"<br>";
+	test.innerHTML += "<input type='radio' name='choices' value='B'> "+chB+"<br>";
+	test.innerHTML += "<input type='radio' name='choices' value='C'> "+chC+"<br>";
+	test.innerHTML += "<input type='radio' name='choices' value='D'> "+chD+"<br><br>";
+	test.innerHTML += "<button onclick='check()'>Submit</button>";
+	
+}
+function check(){
+	choices = document.getElementsByName("choices");
+	for(var i=0; i<choices.length; i++){
+		if(choices[i].checked){
+			choice = choices[i].value;
+		}
+	}
+	if(choice == ques[pos][5]){
+	correct++;
+	}
+	pos++;
+	Question();
+}
+function solution(){
+	test = _("test");
+	if(pos >= ques.length){
+		test.innerHTML ="Thank you. visit again!!";
+		return false;
+	}
+	
+	question = ques[pos][0];
+	chA = ques[pos][1];
+	chB = ques[pos][2];
+	chC = ques[pos][3];
+	chD = ques[pos][4];
+	test.innerHTML = "<h3>"+(pos+1)+"."+question+"</h3>";
+	test.innerHTML += "A."+chA+"<br>";
+	test.innerHTML += "B."+chB+"<br>";
+	test.innerHTML += "C."+chC+"<br>";
+	test.innerHTML += "D."+chD+"<br><br>";
+	test.innerHTML +="Answer."+ques[pos][5]+"<br>";
+	test.innerHTML +="Explaination:"+ques[pos][6]+"<br>";
+	test.innerHTML += "<button onclick='next()'>Next</button>";	
+}
+function next(){
+	pos++;
+	solution();
+}
+window.addEventListener("load", Question, false);
+</script>
+</head>
+<body>
+
+
+
+<center><h1>JavaScript Quiz</h1></center>
+<h2 id="status"></h2>
+<div id="test"></div>
+</body>
+</html>
